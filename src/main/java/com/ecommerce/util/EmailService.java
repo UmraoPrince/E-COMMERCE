@@ -20,12 +20,25 @@ public class EmailService {
             System.err.println("❌ Error loading db.properties: " + e.getMessage());
         }
 
+        // Check environment variables, fallback to db.properties
         emailUser = System.getenv("EMAIL_USERNAME");
+        if (emailUser == null || emailUser.trim().isEmpty()) {
+            emailUser = System.getenv("MAIL_USERNAME");
+        }
+        if (emailUser == null || emailUser.trim().isEmpty()) {
+            emailUser = System.getenv("SPRING_MAIL_USERNAME");
+        }
         if (emailUser == null || emailUser.trim().isEmpty()) {
             emailUser = prop.getProperty("email.username");
         }
 
         emailPass = System.getenv("EMAIL_PASSWORD");
+        if (emailPass == null || emailPass.trim().isEmpty()) {
+            emailPass = System.getenv("MAIL_PASSWORD");
+        }
+        if (emailPass == null || emailPass.trim().isEmpty()) {
+            emailPass = System.getenv("SPRING_MAIL_PASSWORD");
+        }
         if (emailPass == null || emailPass.trim().isEmpty()) {
             emailPass = prop.getProperty("email.password");
         }
@@ -35,17 +48,57 @@ public class EmailService {
      * Send 6-digit verification code using real Gmail SMTP
      */
     public static boolean sendOTP(String recipientEmail, String recipientName, String otp) {
-        if (emailUser == null || emailPass == null || emailUser.trim().isEmpty() || emailPass.trim().isEmpty()) {
-            System.err.println("❌ SMTP Credentials not configured in db.properties. Cannot send email.");
+        // Dynamic SMTP Host and Port config
+        String mailHost = System.getenv("MAIL_HOST");
+        if (mailHost == null || mailHost.trim().isEmpty()) {
+            mailHost = System.getenv("SPRING_MAIL_HOST");
+        }
+        if (mailHost == null || mailHost.trim().isEmpty()) {
+            mailHost = "smtp.gmail.com";
+        }
+
+        String mailPort = System.getenv("MAIL_PORT");
+        if (mailPort == null || mailPort.trim().isEmpty()) {
+            mailPort = System.getenv("SPRING_MAIL_PORT");
+        }
+        if (mailPort == null || mailPort.trim().isEmpty()) {
+            mailPort = "587";
+        }
+
+        String mailAuth = System.getenv("MAIL_SMTP_AUTH");
+        if (mailAuth == null || mailAuth.trim().isEmpty()) {
+            mailAuth = "true";
+        }
+
+        String mailStarttls = System.getenv("MAIL_SMTP_STARTTLS_ENABLE");
+        if (mailStarttls == null || mailStarttls.trim().isEmpty()) {
+            mailStarttls = "true";
+        }
+
+        // Diagnostic logging (masking password)
+        System.out.println("\n----------------- SMTP DIAGNOSTIC INFO -----------------");
+        System.out.println("Host: " + mailHost);
+        System.out.println("Port: " + mailPort);
+        System.out.println("Auth Enabled: " + mailAuth);
+        System.out.println("StartTLS Enabled: " + mailStarttls);
+        System.out.println("SMTP Username: " + (emailUser != null ? emailUser : "NOT CONFIGURED"));
+        System.out.println("SMTP Password Set: " + (emailPass != null && !emailPass.trim().isEmpty() ? "YES (" + emailPass.length() + " chars)" : "NO"));
+        
+        if (emailUser == null || emailPass == null || emailUser.trim().isEmpty() || emailPass.trim().isEmpty() ||
+            "YOUR_SMTP_EMAIL_ADDRESS".equalsIgnoreCase(emailUser) || "YOUR_SMTP_APPLICATION_PASSWORD".equalsIgnoreCase(emailPass)) {
+            System.err.println("❌ [SMTP CONFIG ERROR] Invalid or default placeholder credentials detected!");
+            System.err.println("Please set the EMAIL_USERNAME and EMAIL_PASSWORD environment variables in your hosting environment (e.g. Render Dashboard).");
+            System.err.println("--------------------------------------------------------\n");
             return false;
         }
+        System.out.println("--------------------------------------------------------\n");
 
         // Configure SMTP Properties
         Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", mailAuth);
+        properties.put("mail.smtp.starttls.enable", mailStarttls);
+        properties.put("mail.smtp.host", mailHost);
+        properties.put("mail.smtp.port", mailPort);
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         // Establish session authentication
