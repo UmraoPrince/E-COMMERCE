@@ -143,5 +143,6 @@ The application features a premium Cream Glassmorphic theme designed for maximum
 ---
 
 ## 👤 Author
-* **Prince Umrao** - Core Developer & UI Designer
+* **[Prince Umrao](https://github.com/UmraoPrince)** - Core Developer & UI Designer
+
 
