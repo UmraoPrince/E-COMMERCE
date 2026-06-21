@@ -15,13 +15,19 @@ public class EmailService {
         try (InputStream input = EmailService.class.getClassLoader().getResourceAsStream("db.properties")) {
             if (input != null) {
                 prop.load(input);
-                emailUser = prop.getProperty("email.username");
-                emailPass = prop.getProperty("email.password");
-            } else {
-                System.err.println("❌ Could not locate db.properties in resources path.");
             }
         } catch (Exception e) {
-            System.err.println("❌ Error loading SMTP configurations: " + e.getMessage());
+            System.err.println("❌ Error loading db.properties: " + e.getMessage());
+        }
+
+        emailUser = System.getenv("EMAIL_USERNAME");
+        if (emailUser == null || emailUser.trim().isEmpty()) {
+            emailUser = prop.getProperty("email.username");
+        }
+
+        emailPass = System.getenv("EMAIL_PASSWORD");
+        if (emailPass == null || emailPass.trim().isEmpty()) {
+            emailPass = prop.getProperty("email.password");
         }
     }
 

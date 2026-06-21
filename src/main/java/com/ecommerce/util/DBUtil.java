@@ -34,7 +34,19 @@ public class DBUtil {
             Class.forName("com.mysql.cj.jdbc.Driver");
             HikariConfig config = new HikariConfig();
             
-            if (loaded) {
+            String envDriver = System.getenv("DB_DRIVER");
+            String envUrl = System.getenv("DB_URL");
+            String envUser = System.getenv("DB_USERNAME");
+            String envPass = System.getenv("DB_PASSWORD");
+
+            if (envUrl != null && !envUrl.trim().isEmpty()) {
+                config.setDriverClassName(envDriver != null ? envDriver : "com.mysql.cj.jdbc.Driver");
+                config.setJdbcUrl(envUrl);
+                config.setUsername(envUser != null ? envUser : "");
+                config.setPassword(envPass != null ? envPass : "");
+                config.setMinimumIdle(2);
+                config.setMaximumPoolSize(5);
+            } else if (loaded) {
                 config.setDriverClassName(prop.getProperty("db.driver"));
                 config.setJdbcUrl(prop.getProperty("db.url"));
                 config.setUsername(prop.getProperty("db.username"));
