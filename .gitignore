@@ -1,0 +1,42 @@
+# Maven Build Outputs
+target/
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Development Tools & local servers
+tools/
+
+# SQLite databases & temp journals
+*.db
+*.db-journal
+
+# Logs
+*.log
+otp_log.txt
+
+# IDE - Eclipse metadata
+.classpath
+.project
+.settings/
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# IDE - VS Code
+.vscode/
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Extra requested patterns
+build/
+out/
+node_modules/
