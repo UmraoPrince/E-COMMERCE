@@ -17,6 +17,10 @@ WORKDIR /usr/local/tomcat
 # Remove default Tomcat apps to serve ShopEasy from the root path (/)
 RUN rm -rf webapps/*
 
+# Disable Tomcat's shutdown port to prevent "Invalid shutdown command" warnings from health checks
+RUN sed -i 's/port="8005"/port="-1"/g' conf/server.xml
+
+
 # Copy the build output WAR from the maven stage as ROOT.war
 COPY --from=build /app/target/ECommerceApp.war webapps/ROOT.war
 
