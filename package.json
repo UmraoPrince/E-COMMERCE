@@ -1,0 +1,10 @@
+{
+  "name": "shopeasy",
+  "version": "1.0.0",
+  "description": "ShopEasy E-Commerce Platform",
+  "scripts": {
+    "dev": "powershell -ExecutionPolicy Bypass -File ./run.ps1"
+  },
+  "author": "Prince Umrao",
+  "license": "ISC"
+}
