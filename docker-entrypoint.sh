@@ -34,6 +34,15 @@ if [ -n "$DATABASE_URL" ] && [ -z "$SPRING_DATASOURCE_URL" ]; then
   echo "SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}"
 fi
 
+# Ensure container JVM doesn't attempt container/cgroup metrics that can NPE on some hosts
+# Workaround: disable container support in the JVM which prevents cgroup probing.
+# This avoids NullPointerException seen in jdk.internal.platform.cgroupv2.CgroupV2Subsystem
+if [ -z "$CATALINA_OPTS" ]; then
+  export CATALINA_OPTS="-XX:-UseContainerSupport"
+else
+  export CATALINA_OPTS="$CATALINA_OPTS -XX:-UseContainerSupport"
+fi
+
 # Allow passing additional JVM options via CATALINA_OPTS
 if [ -n "$CATALINA_OPTS" ]; then
   export JAVA_OPTS="$CATALINA_OPTS $JAVA_OPTS"
