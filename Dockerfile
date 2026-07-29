@@ -1,6 +1,7 @@
 # -------------------------------------------------------------
 # ShopEasy Dockerfile - Cloud Hosting & Deployment
 # Supports auto-compilation and serving on Apache Tomcat
+# Enhanced to support dynamic PORT and DATABASE_URL conversion for Railway
 # -------------------------------------------------------------
 
 # Step 1: Build the Maven application
@@ -20,12 +21,15 @@ RUN rm -rf webapps/*
 # Disable Tomcat's shutdown port to prevent "Invalid shutdown command" warnings from health checks
 RUN sed -i 's/port="8005"/port="-1"/g' conf/server.xml
 
-
 # Copy the build output WAR from the maven stage as ROOT.war
 COPY --from=build /app/target/ECommerceApp.war webapps/ROOT.war
 
-# Expose Tomcat default port
+# Copy entrypoint script to handle dynamic PORT and DATABASE_URL -> SPRING_DATASOURCE_* mapping
+COPY docker-entrypoint.sh /usr/local/tomcat/docker-entrypoint.sh
+RUN chmod +x /usr/local/tomcat/docker-entrypoint.sh
+
+# Expose Tomcat default port (informational)
 EXPOSE 8080
 
-# Start Tomcat Server
-CMD ["catalina.sh", "run"]
+# Start using the entrypoint which adapts Tomcat port and DB envs at runtime
+CMD ["/usr/local/tomcat/docker-entrypoint.sh"]
