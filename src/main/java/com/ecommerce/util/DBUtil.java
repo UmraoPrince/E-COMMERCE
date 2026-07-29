@@ -39,6 +39,20 @@ public class DBUtil {
             String envUser = System.getenv("DB_USERNAME");
             String envPass = System.getenv("DB_PASSWORD");
 
+            // Auto-detect Railway MySQL variables if DB_URL is not set
+            if ((envUrl == null || envUrl.trim().isEmpty()) && System.getenv("MYSQLHOST") != null) {
+                String mysqlHost = System.getenv("MYSQLHOST");
+                String mysqlPort = System.getenv("MYSQLPORT");
+                String mysqlDb = System.getenv("MYSQLDATABASE");
+                String mysqlUser = System.getenv("MYSQLUSER");
+                String mysqlPass = System.getenv("MYSQLPASSWORD");
+                
+                envUrl = "jdbc:mysql://" + mysqlHost + ":" + (mysqlPort != null ? mysqlPort : "3306") + "/" + mysqlDb + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+                envUser = mysqlUser;
+                envPass = mysqlPass;
+                System.out.println(">>> Detected Railway MySQL Database environment. Auto-configuring DB connection details...");
+            }
+
             if (envUrl != null && !envUrl.trim().isEmpty()) {
                 config.setDriverClassName(envDriver != null ? envDriver : "com.mysql.cj.jdbc.Driver");
                 config.setJdbcUrl(envUrl);
@@ -70,6 +84,7 @@ public class DBUtil {
             // Test connection
             try (Connection test = dataSource.getConnection()) {
                 System.out.println(">>> SUCCESSFULLY Connected to MySQL Database Server! Connection Pool Active.");
+                bootstrapMySQLDatabase(test);
             }
             
         } catch (Exception e) {
@@ -273,7 +288,7 @@ public class DBUtil {
 
             // Seed Admin User (password: admin123 - legacy SHA-256 hash fallback)
             stmt.execute("INSERT INTO users (name, email, mobile, password, address, role, verified) " +
-                         "VALUES ('Admin', 'admin@shop.com', '9999999999', '240be518fabd2724ddb6f04eeb9d5b04c5db5d8a8a27e7db2b90f1574db0a51d', 'Admin Address', 'ADMIN', 1);");
+                         "VALUES ('Admin', 'admin@shop.com', '9999999999', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Admin Address', 'ADMIN', 1);");
 
             // Seed Categories
             stmt.execute("INSERT INTO categories (category_name, description) VALUES ('Electronics', 'Gadgets and Devices');");
@@ -299,6 +314,81 @@ public class DBUtil {
                          "VALUES (3, 'Yoga Mat Premium', 'Non-slip, extra thick.', 1299.00, 0, 'uploads/mat.jpg', 'Amazon', 4.9);");
             stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
                          "VALUES (1, '4K Monitor 27\"', 'IPS panel, HDR ready.', 24999.00, 20, 'uploads/monitor.jpg', 'Newegg', 4.6);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Premium Linen Shirt', 'A breathable and stylish cream-colored casual linen shirt, perfect for summer wear.', 1299.00, 50, 'uploads/shirt.jpg', 'Local', 4.6);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Slim Fit Chino Pant', 'Elegant and comfortable slim-fit olive green cotton chino trousers for smart-casual wear.', 1499.00, 40, 'uploads/pant.jpg', 'Local', 4.4);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Leather Loafer Shoes', 'Premium brown leather loafers with rubber sole and cushioned footbed for elite comfort.', 2499.00, 25, 'uploads/loafer.jpg', 'Local', 4.7);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Silver Chuda Bangle', 'Beautiful polished solid silver bangle (chuda) with traditional detailed engravings.', 1899.00, 15, 'uploads/bangle.jpg', 'Local', 4.9);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Classic White T-Shirt', 'Ultra-soft 100% cotton crewneck white t-shirt, breathable and perfect for daily layering.', 199.00, 120, 'uploads/tshirt_white.jpg', 'Local', 4.3);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Urban Black Graphic Tee', 'Fashionable black crewneck t-shirt featuring a minimal artistic graphic print on chest.', 249.00, 90, 'uploads/tshirt_black.jpg', 'Local', 4.5);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Navy Blue Polo Tee', 'Classic navy blue polo t-shirt with ribbed collar and comfortable premium cotton-pique fabric.', 299.00, 75, 'uploads/tshirt_polo.jpg', 'Local', 4.6);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Sports Training Tee', 'Lightweight and quick-dry white sports t-shirt, optimized for active training and gym workouts.', 279.00, 60, 'uploads/tshirt_white.jpg', 'Local', 4.2);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'V-Neck Casual Tee', 'Simple and sleek black v-neck cotton t-shirt for clean everyday casual styling.', 229.00, 80, 'uploads/tshirt_black.jpg', 'Local', 4.1);");
+            stmt.execute("INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) " +
+                         "VALUES (2, 'Striped Summer Tee', 'Lightweight striped knit t-shirt with navy blue and white horizontal lines, perfect for hot weather.', 289.00, 45, 'uploads/tshirt_polo.jpg', 'Local', 4.4);");
+        }
+    }
+
+    /**
+     * Bootstraps schema and seeds admin/categories/products for MySQL database.
+     */
+    private static void bootstrapMySQLDatabase(Connection conn) {
+        try {
+            // Check if tables exist by testing "SELECT 1 FROM users LIMIT 1"
+            try (Statement check = conn.createStatement()) {
+                check.executeQuery("SELECT 1 FROM users LIMIT 1");
+                System.out.println(">>> MySQL tables already exist. Skipping database seeding.");
+                return; // Tables exist, skip
+            } catch (SQLException ex) {
+                // Table doesn't exist, proceed to bootstrap
+                System.out.println(">>> MySQL tables do not exist. Starting auto-bootstrap...");
+            }
+
+            try (InputStream input = DBUtil.class.getClassLoader().getResourceAsStream("database.sql")) {
+                if (input == null) {
+                    System.err.println(">>> Error: database.sql not found in resources!");
+                    return;
+                }
+                
+                // Read database.sql content
+                java.util.Scanner s = new java.util.Scanner(input, "UTF-8").useDelimiter("\\A");
+                String sqlContent = s.hasNext() ? s.next() : "";
+                
+                // Parse and execute statements
+                String[] statements = sqlContent.split(";");
+                try (Statement stmt = conn.createStatement()) {
+                    for (String sql : statements) {
+                        String trimmed = sql.trim();
+                        if (trimmed.isEmpty()) continue;
+                        
+                        // Skip database creation and use statements
+                        if (trimmed.toUpperCase().startsWith("CREATE DATABASE") || 
+                            trimmed.toUpperCase().startsWith("USE ")) {
+                            continue;
+                        }
+                        
+                        try {
+                            stmt.execute(trimmed);
+                        } catch (SQLException e) {
+                            // If it's a duplicate entry error during seeding, we can ignore it
+                            if (e.getErrorCode() != 1062) { // 1062 is duplicate entry for key in MySQL
+                                System.err.println("Warning: Error executing statement: " + trimmed + " -> " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+                System.out.println(">>> MySQL Database Auto-Bootstrap Completed successfully!");
+            }
+        } catch (Exception e) {
+            System.err.println(">>> Error bootstrapping MySQL database: " + e.getMessage());
         }
     }
 }
