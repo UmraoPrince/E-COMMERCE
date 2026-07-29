@@ -5,14 +5,14 @@
 # -------------------------------------------------------------
 
 # Step 1: Build the Maven application
-FROM maven:3.8.6-openjdk-11 AS build
+FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Step 2: Deploy packaged WAR inside Apache Tomcat
-FROM tomcat:9.0-jdk11-openjdk-slim
+FROM tomcat:9.0-jdk17-temurin-jammy
 WORKDIR /usr/local/tomcat
 
 # Remove default Tomcat apps to serve ShopEasy from the root path (/)

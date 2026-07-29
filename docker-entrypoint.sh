@@ -25,13 +25,20 @@ if [ -n "$DATABASE_URL" ] && [ -z "$SPRING_DATASOURCE_URL" ]; then
 
   if [ "$proto" = "postgres" ] || [ "$proto" = "postgresql" ]; then
     export SPRING_DATASOURCE_URL="jdbc:postgresql://${host}:${port:-5432}/${dbname}"
+    export DB_DRIVER="org.postgresql.Driver"
+    export DB_URL="jdbc:postgresql://${host}:${port:-5432}/${dbname}"
   elif [ "$proto" = "mysql" ]; then
     export SPRING_DATASOURCE_URL="jdbc:mysql://${host}:${port:-3306}/${dbname}"
+    export DB_DRIVER="com.mysql.cj.jdbc.Driver"
+    export DB_URL="jdbc:mysql://${host}:${port:-3306}/${dbname}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
   fi
 
   export SPRING_DATASOURCE_USERNAME="$username"
   export SPRING_DATASOURCE_PASSWORD="$password"
+  export DB_USERNAME="$username"
+  export DB_PASSWORD="$password"
   echo "SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}"
+  echo "DB_URL=${DB_URL}"
 fi
 
 # Ensure container JVM doesn't attempt container/cgroup metrics that can NPE on some hosts
