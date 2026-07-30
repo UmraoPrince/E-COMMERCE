@@ -15,14 +15,15 @@ services:
 
       # --- EMAIL CONFIGURATION (SMTP) ---
       # Set your real SMTP email & password to enable OTP features
+      # Using Brevo SMTP on port 2525 is recommended on Render Free Tier to bypass port blocks.
       - key: EMAIL_USERNAME
-        value: YOUR_SMTP_EMAIL_ADDRESS
+        value: YOUR_BREVO_SMTP_LOGIN
       - key: EMAIL_PASSWORD
-        value: YOUR_SMTP_APPLICATION_PASSWORD
+        value: YOUR_BREVO_SMTP_KEY
       - key: MAIL_HOST
-        value: smtp.gmail.com
+        value: smtp-relay.brevo.com
       - key: MAIL_PORT
-        value: 587
+        value: 2525
 
       # --- EXTERNAL DATABASE CONFIGURATION (Optional MySQL) ---
       # If you want to use an external MySQL database instead of the default SQLite fallback,

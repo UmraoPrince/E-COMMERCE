@@ -62,7 +62,11 @@ public class EmailService {
             mailPort = System.getenv("SPRING_MAIL_PORT");
         }
         if (mailPort == null || mailPort.trim().isEmpty()) {
-            mailPort = "587";
+            if (mailHost != null && mailHost.toLowerCase().contains("brevo")) {
+                mailPort = "2525";
+            } else {
+                mailPort = "587";
+            }
         }
 
         String mailAuth = System.getenv("MAIL_SMTP_AUTH");
