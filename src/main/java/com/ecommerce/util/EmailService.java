@@ -99,7 +99,8 @@ public class EmailService {
         properties.put("mail.smtp.starttls.enable", mailStarttls);
         properties.put("mail.smtp.host", mailHost);
         properties.put("mail.smtp.port", mailPort);
-        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2 TLSv1.3");
+        properties.put("mail.smtp.ssl.trust", mailHost);
 
         // Establish session authentication
         Session session = Session.getInstance(properties, new Authenticator() {
@@ -108,6 +109,7 @@ public class EmailService {
                 return new PasswordAuthentication(emailUser, emailPass);
             }
         });
+        session.setDebug(true); // Enable detailed SMTP session debugging logs
 
         try {
             Message message = new MimeMessage(session);
