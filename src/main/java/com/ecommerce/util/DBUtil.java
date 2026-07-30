@@ -39,6 +39,37 @@ public class DBUtil {
             String envUser = System.getenv("DB_USERNAME");
             String envPass = System.getenv("DB_PASSWORD");
 
+            // Backup: Java-level parsing of DATABASE_URL if DB_URL is not set
+            String envDatabaseUrl = System.getenv("DATABASE_URL");
+            if ((envUrl == null || envUrl.trim().isEmpty()) && envDatabaseUrl != null && envDatabaseUrl.startsWith("mysql://")) {
+                try {
+                    String cleanUrl = envDatabaseUrl.substring(8); // remove mysql://
+                    String[] authAndHost = cleanUrl.split("@");
+                    if (authAndHost.length == 2) {
+                        String[] credentials = authAndHost[0].split(":");
+                        String[] hostAndDb = authAndHost[1].split("/");
+                        
+                        String hostPart = hostAndDb[0];
+                        String dbName = hostAndDb.length > 1 ? hostAndDb[1] : "";
+                        
+                        String mysqlHost = hostPart;
+                        String mysqlPort = "3306";
+                        if (hostPart.contains(":")) {
+                            String[] hp = hostPart.split(":");
+                            mysqlHost = hp[0];
+                            mysqlPort = hp[1];
+                        }
+                        
+                        envUrl = "jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + dbName + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+                        if (credentials.length > 0) envUser = credentials[0];
+                        if (credentials.length > 1) envPass = credentials[1];
+                        System.out.println(">>> Parsed DATABASE_URL in Java code: Host=" + mysqlHost + ", Port=" + mysqlPort + ", DB=" + dbName);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Warning: Failed to parse DATABASE_URL at Java level: " + ex.getMessage());
+                }
+            }
+
             // Auto-detect Railway MySQL variables if DB_URL is not set
             if ((envUrl == null || envUrl.trim().isEmpty()) && System.getenv("MYSQLHOST") != null) {
                 String mysqlHost = System.getenv("MYSQLHOST");
