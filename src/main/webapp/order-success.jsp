@@ -35,7 +35,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - Order Success</title>
+    <title>Prince Store - Order Success</title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
     <style>
         .txn-detail-row {
             display: flex;
@@ -58,7 +60,7 @@
                     <i class="bi bi-patch-check-fill text-success" style="font-size: 5rem; display: block; filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));"></i>
                     
                     <h2 class="text-white mt-4">Order Placed Successfully!</h2>
-                    <p class="text-muted lead px-3 mt-2">Thank you for shopping with ShopEasy. Your order has been registered and is being processed by our store team.</p>
+                    <p class="text-muted lead px-3 mt-2">Thank you for shopping with Prince Store. Your order has been registered and is being processed by our store team.</p>
                     
                     <c:if test="${not empty order}">
                         <div class="card p-4 my-4 text-start mx-auto" style="max-width: 500px;">

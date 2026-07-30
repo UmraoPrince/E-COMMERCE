@@ -1,7 +1,7 @@
 {
-  "name": "shopeasy",
+  "name": "prince-store",
   "version": "1.0.0",
-  "description": "ShopEasy E-Commerce Platform",
+  "description": "Prince Store E-Commerce Platform",
   "scripts": {
     "dev": "powershell -ExecutionPolicy Bypass -File ./run.ps1"
   },

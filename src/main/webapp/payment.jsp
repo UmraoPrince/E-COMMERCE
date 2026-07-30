@@ -37,7 +37,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - Secure Payment Gateway</title>
+    <title>Prince Store - Secure Payment Gateway</title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
     <style>
         .payment-container {
             max-width: 600px;
@@ -102,7 +104,7 @@
                     <div class="mb-4">
                         <span class="fs-1">🔒</span>
                         <h3 class="text-white mt-2">Secure Online Payment</h3>
-                        <p class="text-muted small">ShopEasy Payment Gateway Simulation</p>
+                        <p class="text-muted small">Prince Store Payment Gateway Simulation</p>
                     </div>
 
                     <div class="card p-4 mb-4 text-start">

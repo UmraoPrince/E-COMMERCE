@@ -4,6 +4,9 @@
 <!-- Global HTML Header Dependencies -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 <!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap Icons -->
@@ -18,8 +21,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top border-bottom border-warning">
     <div class="container-fluid">
-        <a class="navbar-brand text-warning" href="${pageContext.request.contextPath}/admin/dashboard">
-            <i class="bi bi-shield-lock-fill me-1"></i> ShopEasy Admin
+        <a class="navbar-brand text-warning d-flex align-items-center gap-2" href="${pageContext.request.contextPath}/admin/dashboard">
+            <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Prince Store Logo" class="brand-logo" style="height: 34px; width: 34px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(255, 193, 7, 0.5);">
+            <span>Prince Store Admin</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbarContent" aria-controls="adminNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

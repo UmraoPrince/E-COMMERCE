@@ -36,7 +36,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - <c:out value="${product.productName}" /></title>
+    <title>Prince Store - <c:out value="${product.productName}" /></title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 </head>
 <body>
     <%@ include file="components/navbar.jsp" %>

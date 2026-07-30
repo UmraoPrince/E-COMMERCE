@@ -26,6 +26,7 @@ COPY --from=build /app/target/ECommerceApp.war webapps/ROOT.war
 
 # Copy entrypoint script to handle dynamic PORT and DATABASE_URL -> SPRING_DATASOURCE_* mapping
 COPY docker-entrypoint.sh /usr/local/tomcat/docker-entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/tomcat/docker-entrypoint.sh
 RUN chmod +x /usr/local/tomcat/docker-entrypoint.sh
 
 # Expose Tomcat default port (informational)

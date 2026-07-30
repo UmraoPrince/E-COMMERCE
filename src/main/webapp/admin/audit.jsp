@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NexusMarket Admin - Security Audit Logs</title>
+    <title>Prince Store Admin - Security Audit Logs</title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 </head>
 <body>
     <%@ include file="../components/admin_navbar.jsp" %>

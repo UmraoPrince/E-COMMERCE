@@ -46,13 +46,60 @@ public class CsrfFilter implements Filter {
             }
 
             if (requestToken == null || !requestToken.equals(csrfToken)) {
-                // Deny request
-                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid or missing CSRF token. Request denied for safety.");
+                String acceptHeader = req.getHeader("Accept");
+                String xRequestedWith = req.getHeader("X-Requested-With");
+                
+                // For API or AJAX requests, return a JSON 403 response
+                if ((acceptHeader != null && acceptHeader.contains("application/json")) || 
+                    "XMLHttpRequest".equalsIgnoreCase(xRequestedWith)) {
+                    res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    res.setContentType("application/json");
+                    res.setCharacterEncoding("UTF-8");
+                    res.getWriter().write("{\"status\":\"error\",\"message\":\"Session expired or security token invalid. Please refresh the page.\"}");
+                    return;
+                }
+                
+                // For standard form submissions, redirect back to referer or login.jsp with a friendly message
+                String referer = req.getHeader("Referer");
+                if (referer == null || referer.isEmpty()) {
+                    referer = req.getContextPath() + "/login.jsp";
+                }
+                
+                String cleanReferer = cleanUrlQuery(referer);
+                String separator = cleanReferer.contains("?") ? "&" : "?";
+                String redirectUrl = cleanReferer + separator + "error=Session+expired+or+security+token+invalid.+Please+try+again.";
+                
+                res.sendRedirect(redirectUrl);
                 return;
             }
         }
 
         chain.doFilter(request, response);
+    }
+
+    private String cleanUrlQuery(String url) {
+        if (url == null) return "";
+        int queryIndex = url.indexOf('?');
+        if (queryIndex == -1) {
+            return url;
+        }
+        String baseUrl = url.substring(0, queryIndex);
+        String queryString = url.substring(queryIndex + 1);
+        StringBuilder cleanQuery = new StringBuilder();
+        String[] pairs = queryString.split("&");
+        for (String pair : pairs) {
+            if (!pair.startsWith("error=")) {
+                if (cleanQuery.length() > 0) {
+                    cleanQuery.append("&");
+                }
+                cleanQuery.append(pair);
+            }
+        }
+        if (cleanQuery.length() > 0) {
+            return baseUrl + "?" + cleanQuery.toString();
+        } else {
+            return baseUrl;
+        }
     }
 
     @Override

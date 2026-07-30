@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 
 -- Insert Default Admin (Password: admin123 - hashed with simple SHA-256 for demo fallback)
 INSERT INTO users (name, email, mobile, password, address, role, verified) 
-VALUES ('Admin', 'admin@shop.com', '9999999999', '240be518fabd2724ddb6f04eeb9d5b04c5db5d8a8a27e7db2b90f1574db0a51d', 'Admin Address', 'ADMIN', true);
+VALUES ('Admin', 'admin@shop.com', '9999999999', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Admin Address', 'ADMIN', true);
 
 -- Insert Sample Categories
 INSERT INTO categories (category_name, description) VALUES 
@@ -153,12 +153,22 @@ INSERT INTO categories (category_name, description) VALUES
 
 -- Insert Sample Products
 INSERT INTO products (category_id, product_name, description, price, stock, image, source, rating) VALUES 
-(1, 'Smartphone X', 'Latest smartphone with high res camera', 699.99, 50, 'uploads/phone.jpg', 'Amazon', 4.5),
-(2, 'Denim Jacket', 'Stylish blue denim jacket', 49.99, 100, 'uploads/jacket.jpg', 'AliExpress', 4.0),
-(1, 'Laptop Pro', 'High performance laptop', 999.99, 20, 'uploads/laptop.jpg', 'BestBuy', 4.8),
-(1, 'ProWireless Headphones', 'Noise cancelling, 20h battery life.', 199.00, 50, 'uploads/headphones.jpg', 'Amazon', 4.5),
-(1, 'Smart Watch Gen 5', 'Heart rate monitor, GPS.', 299.00, 5, 'uploads/watch.jpg', 'BestBuy', 4.8),
-(2, 'Cotton Running Tee', 'Breathable fabric for athletes.', 25.00, 100, 'uploads/tee.jpg', 'AliExpress', 4.0),
-(3, 'Ergonomic Office Chair', 'Lumbar support, mesh back.', 150.00, 12, 'uploads/chair.jpg', 'Walmart', 4.2),
-(3, 'Yoga Mat Premium', 'Non-slip, extra thick.', 45.00, 0, 'uploads/mat.jpg', 'Amazon', 4.9),
-(1, '4K Monitor 27"', 'IPS panel, HDR ready.', 350.00, 20, 'uploads/monitor.jpg', 'Newegg', 4.6);
+(1, 'Smartphone X', 'Latest smartphone with high res camera', 57999.00, 50, 'uploads/phone.jpg', 'Amazon', 4.5),
+(2, 'Denim Jacket', 'Stylish blue denim jacket', 2499.00, 100, 'uploads/jacket.jpg', 'AliExpress', 4.0),
+(1, 'Laptop Pro', 'High performance laptop', 82999.00, 20, 'uploads/laptop.jpg', 'BestBuy', 4.8),
+(1, 'ProWireless Headphones', 'Noise cancelling, 20h battery life.', 9999.00, 50, 'uploads/headphones.jpg', 'Amazon', 4.5),
+(1, 'Smart Watch Gen 5', 'Heart rate monitor, GPS.', 14999.00, 5, 'uploads/watch.jpg', 'BestBuy', 4.8),
+(2, 'Cotton Running Tee', 'Breathable fabric for athletes.', 999.00, 100, 'uploads/tee.jpg', 'AliExpress', 4.0),
+(3, 'Ergonomic Office Chair', 'Lumbar support, mesh back.', 8999.00, 12, 'uploads/chair.jpg', 'Walmart', 4.2),
+(3, 'Yoga Mat Premium', 'Non-slip, extra thick.', 1299.00, 0, 'uploads/mat.jpg', 'Amazon', 4.9),
+(1, '4K Monitor 27"', 'IPS panel, HDR ready.', 24999.00, 20, 'uploads/monitor.jpg', 'Newegg', 4.6),
+(2, 'Premium Linen Shirt', 'A breathable and stylish cream-colored casual linen shirt, perfect for summer wear.', 1299.00, 50, 'uploads/shirt.jpg', 'Local', 4.6),
+(2, 'Slim Fit Chino Pant', 'Elegant and comfortable slim-fit olive green cotton chino trousers for smart-casual wear.', 1499.00, 40, 'uploads/pant.jpg', 'Local', 4.4),
+(2, 'Leather Loafer Shoes', 'Premium brown leather loafers with rubber sole and cushioned footbed for elite comfort.', 2499.00, 25, 'uploads/loafer.jpg', 'Local', 4.7),
+(2, 'Silver Chuda Bangle', 'Beautiful polished solid silver bangle (chuda) with traditional detailed engravings.', 1899.00, 15, 'uploads/bangle.jpg', 'Local', 4.9),
+(2, 'Classic White T-Shirt', 'Ultra-soft 100% cotton crewneck white t-shirt, breathable and perfect for daily layering.', 199.00, 120, 'uploads/tshirt_white.jpg', 'Local', 4.3),
+(2, 'Urban Black Graphic Tee', 'Fashionable black crewneck t-shirt featuring a minimal artistic graphic print on chest.', 249.00, 90, 'uploads/tshirt_black.jpg', 'Local', 4.5),
+(2, 'Navy Blue Polo Tee', 'Classic navy blue polo t-shirt with ribbed collar and comfortable premium cotton-pique fabric.', 299.00, 75, 'uploads/tshirt_polo.jpg', 'Local', 4.6),
+(2, 'Sports Training Tee', 'Lightweight and quick-dry white sports t-shirt, optimized for active training and gym workouts.', 279.00, 60, 'uploads/tshirt_white.jpg', 'Local', 4.2),
+(2, 'V-Neck Casual Tee', 'Simple and sleek black v-neck cotton t-shirt for clean everyday casual styling.', 229.00, 80, 'uploads/tshirt_black.jpg', 'Local', 4.1),
+(2, 'Striped Summer Tee', 'Lightweight striped knit t-shirt with navy blue and white horizontal lines, perfect for hot weather.', 289.00, 45, 'uploads/tshirt_polo.jpg', 'Local', 4.4);

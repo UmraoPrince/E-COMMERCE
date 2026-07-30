@@ -5,7 +5,7 @@
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>ShopEasy ECommerce Application</display-name>
+    <display-name>Prince Store ECommerce Application</display-name>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

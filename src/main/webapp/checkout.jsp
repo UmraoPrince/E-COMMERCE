@@ -30,7 +30,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - Checkout</title>
+    <title>Prince Store - Checkout</title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
     <style>
         .payment-card {
             background: rgba(255, 255, 255, 0.45);

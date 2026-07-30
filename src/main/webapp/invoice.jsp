@@ -36,7 +36,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - Invoice #<c:out value="${order.orderId}"/></title>
+    <title>Prince Store - Invoice #<c:out value="${order.orderId}"/></title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
     <style>
         .invoice-card {
             max-width: 800px;
@@ -152,9 +154,12 @@
         <div class="invoice-card">
             <!-- Header -->
             <div class="invoice-header d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="brand-logo">Shop<span>Easy</span></div>
-                    <p class="text-muted small mb-0">Secure Online E-Commerce Platform</p>
+                <div class="d-flex align-items-center gap-2">
+                    <img src="${pageContext.request.contextPath}/images/logo.jpg" alt="Prince Store Logo" style="height: 42px; width: 42px; object-fit: cover; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1);">
+                    <div>
+                        <div class="fs-4 fw-bold" style="color: #2D2D2D; line-height: 1.2;">Prince Store</div>
+                        <p class="text-muted small mb-0">Secure Online E-Commerce Platform</p>
+                    </div>
                 </div>
                 <div class="text-end">
                     <h3 class="mb-1 text-dark">INVOICE</h3>
@@ -239,7 +244,7 @@
 
             <!-- Footer -->
             <div class="text-center mt-5 pt-4 border-top border-light text-muted small">
-                <p class="mb-1">Thank you for shopping at ShopEasy!</p>
+                <p class="mb-1">Thank you for shopping at Prince Store!</p>
                 <p class="mb-0">This is a computer-generated simulated receipt invoice. No signature required.</p>
             </div>
         </div>

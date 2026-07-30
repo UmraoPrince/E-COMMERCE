@@ -1,6 +1,6 @@
-# ShopEasy - Modern E-Commerce Platform
+# Prince Store - Modern E-Commerce Platform
 
-ShopEasy is a premium, secure, and fully responsive e-commerce web application featuring a stunning Apple-inspired **Cream Glassmorphism** user interface. Built with Java, JSPs, and Servlets, the platform delivers a complete online shopping experience including product discovery, shopping cart management, transactional OTP authentication, interactive checkout payment gateways, printable receipts, and an administrative control panel.
+Prince Store is a premium, secure, and fully responsive e-commerce web application featuring a stunning Apple-inspired **Cream Glassmorphism** user interface. Built with Java, JSPs, and Servlets, the platform delivers a complete online shopping experience including product discovery, shopping cart management, transactional OTP authentication, interactive checkout payment gateways, printable receipts, and an administrative control panel.
 
 ---
 

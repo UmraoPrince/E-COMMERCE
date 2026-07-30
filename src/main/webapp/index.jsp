@@ -53,7 +53,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShopEasy - Modern E-Commerce Catalog</title>
+    <title>Prince Store - Modern E-Commerce Catalog</title>
+    <link rel="icon" type="image/jpeg" href="${pageContext.request.contextPath}/images/logo.jpg">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
 </head>
 <body>
     <!-- Navigation Header -->

@@ -111,9 +111,9 @@ public class EmailService {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emailUser, "ShopEasy Security"));
+            message.setFrom(new InternetAddress(emailUser, "Prince Store Security"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-            message.setSubject("Verify Your ShopEasy Account");
+            message.setSubject("Verify Your Prince Store Account");
 
             // Construct professional HTML email template
             String emailContent = 
@@ -130,13 +130,13 @@ public class EmailService {
                 "                    <!-- Header -->" +
                 "                    <tr>" +
                 "                        <td align='center' style='background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 30px 20px;'>" +
-                "                            <h1 style='color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;'>ShopEasy</h1>" +
+                "                            <h1 style='color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;'>Prince Store</h1>" +
                 "                        </td>" +
                 "                    </tr>" +
                 "                    <!-- Content -->" +
                 "                    <tr>" +
                 "                        <td style='padding: 40px 30px;'>" +
-                "                            <h2 style='color: #1a202c; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 15px;'>Welcome to ShopEasy, " + recipientName + "!</h2>" +
+                "                            <h2 style='color: #1a202c; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 15px;'>Welcome to Prince Store, " + recipientName + "!</h2>" +
                 "                            <p style='font-size: 16px; line-height: 1.6; color: #4a5568; margin: 0 0 25px 0;'>Thank you for registering. Use the secure verification code below to verify your email and activate your account:</p>" +
                 "                            " +
                 "                            <!-- OTP Box -->" +
@@ -154,14 +154,14 @@ public class EmailService {
                 "                            " +
                 "                            <div style='background-color: #fffaf0; border-left: 4px solid #dd6b20; padding: 15px; border-radius: 4px; margin-bottom: 25px;'>" +
                 "                                <p style='font-size: 13px; line-height: 1.5; color: #dd6b20; margin: 0; font-weight: 600;'>⚠️ Security Warning</p>" +
-                "                                <p style='font-size: 13px; line-height: 1.5; color: #7b341e; margin: 5px 0 0 0;'>ShopEasy representatives will never ask for your verification code or password. If you did not request this email, please ignore it.</p>" +
+                "                                <p style='font-size: 13px; line-height: 1.5; color: #7b341e; margin: 5px 0 0 0;'>Prince Store representatives will never ask for your verification code or password. If you did not request this email, please ignore it.</p>" +
                 "                            </div>" +
                 "                        </td>" +
                 "                    </tr>" +
                 "                    <!-- Footer -->" +
                 "                    <tr>" +
                 "                        <td style='background-color: #f7fafc; padding: 20px 30px; border-top: 1px solid #edf2f7; text-align: center;'>" +
-                "                            <p style='font-size: 13px; line-height: 1.5; color: #a0aec0; margin: 0;'>&copy; 2026 ShopEasy Inc. All rights reserved.</p>" +
+                "                            <p style='font-size: 13px; line-height: 1.5; color: #a0aec0; margin: 0;'>&copy; 2026 Prince Store Inc. All rights reserved.</p>" +
                 "                            <p style='font-size: 12px; line-height: 1.5; color: #cbd5e0; margin: 5px 0 0 0;'>This is an automated system email. Please do not reply.</p>" +
                 "                        </td>" +
                 "                    </tr>" +

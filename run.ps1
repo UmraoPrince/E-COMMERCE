@@ -72,4 +72,4 @@ Start-Sleep -Seconds 5
 Write-Host ">>> Launching browser..." -ForegroundColor Green
 Start-Process "http://localhost:8080/"
 
-Write-Host ">>> Setup Completed successfully! ShopEasy is running on your browser." -ForegroundColor Green
+Write-Host ">>> Setup Completed successfully! Prince Store is running on your browser." -ForegroundColor Green

@@ -102,7 +102,19 @@ public class DBUtil {
                 Class.forName("org.sqlite.JDBC");
                 HikariConfig config = new HikariConfig();
                 config.setDriverClassName("org.sqlite.JDBC");
-                config.setJdbcUrl("jdbc:sqlite:ecommerce.db");
+                
+                String sqlitePath = System.getenv("SQLITE_DB_PATH");
+                if (sqlitePath == null || sqlitePath.trim().isEmpty()) {
+                    sqlitePath = "ecommerce.db";
+                } else {
+                    // Ensure the parent directory exists
+                    java.io.File dbFile = new java.io.File(sqlitePath);
+                    java.io.File parentDir = dbFile.getParentFile();
+                    if (parentDir != null && !parentDir.exists()) {
+                        parentDir.mkdirs();
+                    }
+                }
+                config.setJdbcUrl("jdbc:sqlite:" + sqlitePath);
                 
                 // SQLite allows multiple readers but only 1 writer at a time.
                 // Setting max pool size to 1 prevents concurrent "database is locked" errors.
